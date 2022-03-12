@@ -1,5 +1,6 @@
-
-/*created by prashant shukla */
+rightwristX = "";
+rightwristY = "";
+rihgtwristscore = "";
 
 var paddle2 =10,paddle1=10;
 
@@ -41,6 +42,7 @@ function gotPoses(results)
   {
     rightwristX = results[0].pose.rightwrist.x;
     rightwristY = results[0].pose.rightwrist.y;
+    rihgtwristscore = results[0].pose.keypoints[10].score;
   }
 }
 
@@ -58,12 +60,22 @@ function draw(){
  
    //funtion paddleInCanvas call 
    paddleInCanvas();
- 
+ if(rihgtwristscore > 0.2)
+ {
+   fill("red");
+   stroke("red");
+   circle(rightwristX, rightwristY, 30);
+ }
+
+ if(Game_Status == "start")
+ {
+   document.getElementById("status").innerHTML = "game is loading";
+   paddleInCanvas();
    //left paddle
    fill(250,0,0);
     stroke(0,0,250);
     strokeWeight(0.5);
-   paddle1Y = mouseY; 
+   paddle1Y = rightwristY; 
    rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
    
    
@@ -83,7 +95,7 @@ function draw(){
    
    //function move call which in very important
     move();
-}
+}}
 
 
 
